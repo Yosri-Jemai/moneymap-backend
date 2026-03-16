@@ -2,7 +2,6 @@ package com.yosri.moneymap.service;
 
 import com.yosri.moneymap.entity.Profile;
 import com.yosri.moneymap.repository.ProfileRepository;
-import com.yosri.moneymap.security.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
