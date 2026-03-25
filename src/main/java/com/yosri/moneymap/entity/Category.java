@@ -22,6 +22,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(updatable = false)
@@ -31,6 +32,7 @@ public class Category {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Column(nullable = false)
     private String type;
 
     private String icon;

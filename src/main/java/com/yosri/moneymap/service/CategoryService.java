@@ -26,6 +26,7 @@ public class CategoryService {
 
     private CategoryDTO toDTO(Category category) {
         return CategoryDTO.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .type(category.getType())
                 .icon(category.getIcon())
