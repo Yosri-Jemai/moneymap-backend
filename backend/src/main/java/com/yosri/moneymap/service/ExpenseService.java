@@ -7,6 +7,7 @@ import com.yosri.moneymap.entity.Profile;
 import com.yosri.moneymap.repository.CategoryRepository;
 import com.yosri.moneymap.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -86,5 +87,11 @@ public class ExpenseService {
         Profile profile = profileService.getCurrentProfile();
         BigDecimal total = expenseRepository.findTotalExpenseByProfileId(profile.getId());
         return total != null ? total : BigDecimal.ZERO;
+    }
+
+    public List<ExpenseDTO> filterExpenses(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        Profile profile =  profileService.getCurrentProfile();
+        List<Expense> expenses = expenseRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(profile.getId(), startDate, endDate, keyword, sort);
+        return expenses.stream().map(this::toDTO).toList();
     }
 }
