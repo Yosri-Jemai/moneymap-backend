@@ -6,6 +6,7 @@ import com.yosri.moneymap.entity.Profile;
 import com.yosri.moneymap.repository.ProfileRepository;
 import com.yosri.moneymap.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,9 @@ public class ProfileService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+
+    @Value("${app.activation.url}")
+    private String activationURL;
 
     public Profile toEntity(ProfileDTO profileDTO) {
         return Profile.builder()
@@ -55,7 +59,7 @@ public class ProfileService {
         Profile newProfile = toEntity(profileDTO);
         newProfile.setActivationToken(UUID.randomUUID().toString());
         Profile savedProfile = profileRepository.save(newProfile);
-        String activationLink = "http://localhost:8080/api/v1/activate?token=" + savedProfile.getActivationToken();
+        String activationLink = activationURL+"/api/v1/activate?token=" + savedProfile.getActivationToken();
         String subject = "Activate your Money Map account";
         String body = "Click the following Link to activate your Money Map account: "+ activationLink;
         emailService.sendEmail(savedProfile.getEmail(), subject, body);
