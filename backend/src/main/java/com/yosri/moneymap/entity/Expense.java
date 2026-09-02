@@ -43,7 +43,7 @@ public class Expense {
     @JoinColumn(name = "profile_id", nullable = false)
     private Profile profile;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 

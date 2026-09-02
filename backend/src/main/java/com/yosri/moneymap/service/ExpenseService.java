@@ -94,4 +94,9 @@ public class ExpenseService {
         List<Expense> expenses = expenseRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(profile.getId(), startDate, endDate, keyword, sort);
         return expenses.stream().map(this::toDTO).toList();
     }
+
+    public List<ExpenseDTO> getExpensesForUserOnDate(long profileId, LocalDate date) {
+        List<Expense>  expenses = expenseRepository.findByProfileIdAndDate(profileId, date);
+        return expenses.stream().map(this::toDTO).toList();
+    }
 }
